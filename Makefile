@@ -1,15 +1,11 @@
-#
-# Copyright (C) 2006-2015 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-
+# clone this repositoy in the OpenWrt-SDK-15.05.1-x86-64_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64/package/ directory.
+# Possible needed packages !
 # ./scripts/feeds update -a
 # ./scripts/feeds install protobuf
 # ./scripts/feeds install libcap
 # ./scripts/feeds install libprotobuf-c
-
+# ./scripts/feeds install libpcap
+# ./scripts/feeds install libmount
 
 include $(TOPDIR)/rules.mk
 
@@ -23,23 +19,15 @@ PKG_SOURCE_URL:=https://github.com/google/nsjail.git
 PKG_SOURCE_VERSION:=de9712befc9536c45928405339aa8b526b91d707
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_BUILD_DEPENDS := libprotobuf libcap  
+PKG_BUILD_DEPENDS = +libcap  +protobuf +libprotobuf 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/kernel.mk
-
-#MAKE_FLAGS += prefix=$(STAGING_DIR)/usr libdir=$(STAGING_DIR)/usr/lib includedir=$(STAGING_DIR)/usr/include
-#MAKE_INSTALL_FLAGS += prefix=/usr libdir=/usr/lib includedir=/usr/include
-#TARGET_CFLAGS += $(FPIC)
-#TARGET_CPPFLAGS += -I$(STAGING_DIR)/usr/
-#$(LINUX_DIR)/include/uapi/linux/
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-
 
 define Package/nsjail
   SECTION:=utils
   CATEGORY:=Utilities
-#  DEPENDS := +libcap +protobuf +libuuid +libprotobuf
+  DEPENDS := +libcap  +protobuf  +libpcap  +libprotobuf
   TITLE:=A light-weight process isolation tool
   URL:=https://github.com/google/nsjail
   MENU:=1
